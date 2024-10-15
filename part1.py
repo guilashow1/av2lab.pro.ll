@@ -1,11 +1,10 @@
-# Dicionários para armazenar dados
-usuarios = {}  # Para gerenciar usuários do sistema (administradores, coordenadores, professores, alunos)
-estudantes = {}  # Para gerenciar dados de estudantes
-cursos = {}  # Para gerenciar os cursos
-notas = {}  # Para armazenar as notas dos estudantes em cursos
-professores = {}  # Para gerenciar dados dos professores
 
-# Função para cadastrar usuários
+usuarios = {}  
+estudantes = {}  
+cursos = {}  
+notas = {}  
+professores = {} 
+
 def cadastrar_usuario(tipo_usuario="administrador"):
     while True:
         usuario = input(f"Digite o nome do {tipo_usuario}: ")
@@ -17,18 +16,18 @@ def cadastrar_usuario(tipo_usuario="administrador"):
     usuarios[usuario] = {"senha": senha, "tipo": tipo_usuario}
     print(f"{tipo_usuario.capitalize()} {usuario} cadastrado com sucesso!")
 
-# Função para login de usuários
+
 def login():
     usuario = input("Digite o nome de usuário: ")
     senha = input("Digite a senha: ")
     if usuario in usuarios and usuarios[usuario]["senha"] == senha:
         print(f"Bem-vindo, {usuario}!")
-        return usuario  # Retorna o nome do usuário logado
+        return usuario
     else:
         print("Login inválido! Usuário ou senha incorretos.")
         return None
 
-# Função para cadastrar estudantes
+
 def cadastrar_estudante():
     matricula = input("Digite o número de matrícula do estudante: ")
     if matricula in estudantes:
@@ -40,7 +39,7 @@ def cadastrar_estudante():
     estudantes[matricula] = {"nome": nome, "email": email, "curso": curso}
     print(f"Estudante {nome} cadastrado com sucesso!")
 
-# Função para cadastrar professores
+
 def cadastrar_professor():
     email = input("Digite o e-mail do professor: ")
     if email in professores:
@@ -50,7 +49,7 @@ def cadastrar_professor():
     professores[email] = {"nome": nome}
     print(f"Professor {nome} cadastrado com sucesso!")
 
-# Função para cadastrar cursos
+
 def cadastrar_curso():
     codigo_curso = input("Digite o código do curso: ")
     if codigo_curso in cursos:
@@ -59,7 +58,7 @@ def cadastrar_curso():
     nome_curso = input("Digite o nome do curso: ")
     creditos = int(input("Digite o número de créditos do curso: "))
 
-    # Escolher um professor para o curso
+    
     print("Professores disponíveis:")
     for email, dados in professores.items():
         print(f"{dados['nome']} (E-mail: {email})")
@@ -72,7 +71,7 @@ def cadastrar_curso():
     cursos[codigo_curso] = {"nome": nome_curso, "creditos": creditos, "professor": professor_email}
     print(f"Curso {nome_curso} cadastrado com sucesso, sob responsabilidade do professor {professores[professor_email]['nome']}.")
 
-# Função para registrar notas dos estudantes
+
 def registrar_nota(usuario_logado):
     if usuarios[usuario_logado]["tipo"] == "professor":
         professor_email = usuario_logado
@@ -95,7 +94,7 @@ def registrar_nota(usuario_logado):
     else:
         print("Estudante não encontrado!")
 
-# Função para exibir informações dos estudantes
+
 def exibir_estudantes():
     if estudantes:
         print("\nLista de Estudantes:")
@@ -104,7 +103,7 @@ def exibir_estudantes():
     else:
         print("Nenhum estudante cadastrado.")
 
-# Função para exibir professores
+
 def exibir_professores():
     if professores:
         print("\nLista de Professores:")
@@ -113,7 +112,7 @@ def exibir_professores():
     else:
         print("Nenhum professor cadastrado.")
 
-# Função para exibir cursos com professores
+
 def exibir_cursos():
     if cursos:
         print("\nLista de Cursos:")
@@ -124,7 +123,7 @@ def exibir_cursos():
     else:
         print("Nenhum curso cadastrado.")
 
-# Função para exibir notas de um estudante
+
 def exibir_notas():
     matricula = input("Digite a matrícula do estudante: ")
     if matricula in estudantes:
@@ -137,13 +136,13 @@ def exibir_notas():
     else:
         print("Estudante não encontrado!")
 
-# Função para verificar se há administradores cadastrados
+
 def verificar_admins():
     if not usuarios:
         print("Vamos cadastrar o primeiro administrador do sistema.")
         cadastrar_usuario("administrador")
 
-# Função para verificar permissões do usuário
+
 def verificar_permissao(usuario, tipos_permitidos=["administrador"]):
     if usuarios[usuario]["tipo"] in tipos_permitidos:
         return True
@@ -151,25 +150,25 @@ def verificar_permissao(usuario, tipos_permitidos=["administrador"]):
         print("Acesso negado. Você não tem permissão para realizar esta ação.")
         return False
 
-# Função principal de menu
+
 def menu():
-    verificar_admins()  # Verifica se há algum administrador cadastrado antes de permitir o login
+    verificar_admins()
 
     usuario_logado = login()
     if not usuario_logado:
-        return  # Se o login falhar, o menu não será exibido
+        return
 
     while True:
         print("\nMenu Acadêmico:")
-        print("1 - Cadastrar novo usuário (Administrador, Coordenador, Professor, Aluno)")
-        print("2 - Cadastrar estudante")
-        print("3 - Cadastrar curso")
-        print("4 - Cadastrar professor")
-        print("5 - Registrar nota")
-        print("6 - Exibir estudantes")
-        print("7 - Exibir cursos")
-        print("8 - Exibir professores")
-        print("9 - Exibir notas de um estudante")
+        print("1 - Cadastrar estudante")
+        print("2 - Cadastrar curso")
+        print("3 - Cadastrar professor")
+        print("4 - Registrar nota")
+        print("5 - Exibir estudantes")
+        print("6 - Exibir cursos")
+        print("7 - Exibir professores")
+        print("8 - Exibir notas de um estudante")
+        print("9 - Cadastrar novo usuário (Administrador, Coordenador, Professor, Aluno)")
         print("0 - Sair")
         opcao = input("Escolha uma opção: ")
 
